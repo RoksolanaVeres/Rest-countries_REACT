@@ -22,7 +22,7 @@ module.exports = {
     },
     extend: {
       gridTemplateColumns: {
-        "auto-fill-265": "repeat(auto-fill,minmax(265px,1fr))",
+        "auto-fill-265": "repeat(auto-fill,minmax(265px, 1fr))",
       },
       fontFamily: { nunito: ["Nunito Sans", "sans-serif"] },
       colors: {
