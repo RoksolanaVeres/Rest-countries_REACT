@@ -2,21 +2,21 @@ import { createContext, useState, useEffect } from "react";
 
 export const CountriesContext = createContext(null);
 
+const fields =
+  "name,flags,capital,continents,population,nativeName,subregion,topLevelDomain,currencies,languages,borders";
+const url = `https://restcountries.com/v3.1/all?fields=${fields}`;
+
+// data fetching function
+async function getCountries() {
+  const response = await fetch(url);
+  const countriesData = await response.json();
+  return countriesData;
+}
+
 export function CountriesContextProvider({
   children,
   storageKey = "app-countries",
 }) {
-  // data fetching function
-  const fields =
-    "name,flags,capital,continents,population,nativeName,subregion,topLevelDomain,currencies,languages,borders";
-  const url = `https://restcountries.com/v3.1/all?fields=${fields}`;
-
-  async function getCountries() {
-    const response = await fetch(url);
-    const countriesData = await response.json();
-    return countriesData;
-  }
-
   //initialize countries data
   const [countries, setCountries] = useState({
     data: localStorage.getItem(storageKey)
