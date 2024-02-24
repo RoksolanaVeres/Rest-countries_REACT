@@ -35,15 +35,15 @@ export default function CountriesPage() {
 
                   <h3>
                     Population:
-                    <span className="font-normal">{country.population}</span>
+                    <span className="font-normal"> {country.population}</span>
                   </h3>
                   <h3>
                     Region:
-                    <span className="font-normal">{country.region}</span>
+                    <span className="font-normal"> {country.continents}</span>
                   </h3>
                   <h3>
                     Capital:
-                    <span className="font-normal">{country.capital}</span>
+                    <span className="font-normal"> {country.capital}</span>
                   </h3>
                 </div>
               </div>
