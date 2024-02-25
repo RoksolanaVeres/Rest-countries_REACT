@@ -11,6 +11,7 @@ module.exports = {
   theme: {
     screens: {
       md: "700px",
+      lg: "1000px",
     },
 
     container: {
@@ -23,6 +24,8 @@ module.exports = {
     extend: {
       gridTemplateColumns: {
         "auto-fill-265": "repeat(auto-fill,minmax(265px, 1fr))",
+        "auto-fill-150": "repeat(auto-fill,minmax(150px, 1fr))",
+        "auto-fill-100": "repeat(auto-fill,minmax(100px, 1fr))",
       },
       fontFamily: { nunito: ["Nunito Sans", "sans-serif"] },
       colors: {

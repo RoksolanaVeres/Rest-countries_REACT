@@ -19,14 +19,9 @@ export default function CountryPage() {
   console.log(countryData);
 
   // info derived from countryData
-  const {
-    capital,
-    subregion,
-    continents: region,
-    population,
-    tld,
-  } = countryData;
+  const { capital, subregion, continents: region, population } = countryData;
   const flagSvg = countryData.flags.svg;
+  const flagAlt = countryData.flags.alt;
   const commonName = countryData.name.common;
   // native name
   const nativeNameKey = Object.keys(countryData.name.nativeName)[0];
@@ -37,46 +32,77 @@ export default function CountryPage() {
     currencies.push(countryData.currencies[key].name);
   }
   currencies = currencies.join(", ");
-
   //languages
   const languages = Object.values(countryData.languages).join(", ");
+  // top level domain
+  const tld = countryData.tld.join(", ");
   // border countries
   let countriesSymbols = countryData.borders;
 
   return (
     <>
-      <main className="px-7 py-12 md:px-20">
+      <main className="lg:px-20 px-7 py-12 md:px-16">
         <Link to="/">
           <button className="flex items-center gap-4 rounded-lg px-10 py-3 text-2xl shadow-2xl dark:bg-slate-800 dark:text-white">
             <MoveLeft />
             <span>Back</span>
           </button>
         </Link>
-        <div id="country-card" className="grid gap-20 py-24 md:grid-cols-2">
-          <div id="country-flag" className="">
-            <img src={flagSvg} alt="" />
+        <div id="country-card" className="lg:grid-cols-2 grid gap-20 pt-24">
+          <div id="country-flag" className="mx-auto max-w-[600px]">
+            <img src={flagSvg} alt={flagAlt} />
           </div>
-          <div id="country-info" className="grid gap-16 md:grid-cols-2">
-            <h1 className="text-4xl font-bold md:col-span-2">{commonName}</h1>
+          <div
+            id="country-info"
+            className="lg:grid-cols-2 lg:text-base lg:gap-10 grid gap-16 text-lg"
+          >
+            <h1 className="lg:col-span-2 text-4xl font-bold">{commonName}</h1>
             <div id="country-info--main" className="">
-              <ul>
-                <li>Native Name: {nativeName}</li>
-                <li>Population: {population}</li>
-                <li>Region: {region}</li>
-                <li>Sub Region: {subregion}</li>
-                <li>Capital: {capital}</li>
+              <ul className="grid gap-3">
+                <li>
+                  <span className="font-semibold">Native Name: </span>
+                  {nativeName}
+                </li>
+                <li>
+                  <span className="font-semibold"> Population: </span>
+                  {population}
+                </li>
+                <li>
+                  <span className="font-semibold"> Region: </span>
+                  {region}
+                </li>
+                <li>
+                  <span className="font-semibold"> Sub Region: </span>
+                  {subregion}
+                </li>
+                <li>
+                  <span className="font-semibold"> Capital: </span>
+                  {capital}
+                </li>
               </ul>
             </div>
             <div id="country-info--additional" className="">
-              <ul className="*:flex *:gap-2">
-                <li>Top Level Domain: {tld}</li>
-                <li>Currencies: {currencies}</li>
-                <li>Languages: {languages}</li>
+              <ul className="grid gap-3">
+                <li>
+                  <span className="font-semibold"> Top Level Domain: </span>
+                  {tld}
+                </li>
+                <li>
+                  <span className="font-semibold"> Currencies: </span>
+                  {currencies}
+                </li>
+                <li>
+                  <span className="font-semibold"> Languages: </span>
+                  {languages}
+                </li>
               </ul>
             </div>
-            <div id="country-info--borders" className="md:col-span-2">
-              <h2>Border Countries:</h2>
-              <ul>
+            <div
+              id="country-info--borders"
+              className="lg:col-span-2 lg:flex lg:items-center gap-6"
+            >
+              <h2 className="lg:pb-0 pb-8 font-semibold">Border Countries:</h2>
+              <ul className="grid-cols-auto-fill-150 lg:grid-cols-auto-fill-100 lg:flex-1 grid justify-between gap-4">
                 {countriesSymbols.map((symbol) => {
                   let borderCountry = countries.data.find(
                     (_country) => _country.cca3 === symbol,
@@ -84,7 +110,9 @@ export default function CountryPage() {
                   return (
                     <li key={borderCountry.name.common}>
                       <Link to={`/${borderCountry.name.common}`}>
-                        <button>{borderCountry.name.common}</button>
+                        <button className="h-full w-full rounded-lg p-2 shadow-2xl dark:bg-slate-800 dark:text-white">
+                          {borderCountry.name.common}
+                        </button>
                       </Link>
                     </li>
                   );
