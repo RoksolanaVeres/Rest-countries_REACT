@@ -1,17 +1,54 @@
 import Filters from "../Filters";
 import { CountriesContext } from "@/contexts/CountriesContext";
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 export default function CountriesPage() {
   const { countries } = useContext(CountriesContext);
+  const [url, setUrl] = useSearchParams();
+
+  function handleInputChange(event) {
+    setUrl((prev) => ({
+      filter: prev.get("filter") || "",
+      search: event.target.value,
+    }));
+  }
+
+  function handleFilterChange(val) {
+    setUrl((prev) => ({ search: prev.get("search") || "", filter: val }));
+  }
+
+  let displayedCountries = [];
+
+  if (countries.data) {
+    let filtered = [...countries.data];
+
+    const search = url.get("search");
+    const filter = url.get("filter");
+
+    if (search) {
+      filtered = filtered.filter((country) =>
+        country.name.common.toLowerCase().includes(search.toLowerCase()),
+      );
+    }
+    if (filter) {
+      filtered = filtered.filter(
+        (country) => country.region.toLowerCase() === filter.toLowerCase(),
+      );
+    }
+
+    displayedCountries = [...filtered];
+  }
 
   return (
     <main className="px-7 py-12 md:px-20">
-      <Filters />
+      <Filters
+        handleInputChange={handleInputChange}
+        handleFilterChange={handleFilterChange}
+      />
       <div className="grid grid-cols-auto-fill-265 justify-between gap-x-10 gap-y-20 dark:text-white">
         {countries.data &&
-          countries.data.map((country) => {
+          displayedCountries.map((country) => {
             return (
               <div
                 key={country.name.common}
@@ -22,7 +59,7 @@ export default function CountriesPage() {
                     <img
                       src={country.flags.svg}
                       alt={country.flags.alt}
-                      className="fit h-full w-full rounded-lg object-cover"
+                      className="h-full w-full rounded-lg object-cover shadow-2xl transition-transform duration-300 ease-in-out hover:object-contain"
                     />
                   </Link>
                 </div>
@@ -39,7 +76,7 @@ export default function CountriesPage() {
                   </h3>
                   <h3>
                     Region:
-                    <span className="font-normal"> {country.continents}</span>
+                    <span className="font-normal"> {country.region}</span>
                   </h3>
                   <h3>
                     Capital:

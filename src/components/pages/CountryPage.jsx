@@ -8,76 +8,90 @@ export default function CountryPage() {
   const params = useParams();
   const chosenCountry = params.country;
 
-  let countryData = null;
+  const COUNTRY = {
+    capital: undefined,
+    region: undefined,
+    subregion: undefined,
+    population: undefined,
+    flagSvg: undefined,
+    flagAlt: undefined,
+    commonName: undefined,
+    nativeName: undefined,
+    tld: undefined,
+    languages: undefined,
+    currencies: [],
+    countriesSymbols: [],
+  };
+
+  console.log("COUNTRY", COUNTRY);
+  console.log("countries.data", countries.data);
 
   if (countries.data) {
-    countryData = countries.data.find(
+    const countryData = countries.data.find(
       (_country) => _country.name.common === chosenCountry,
     );
+    COUNTRY.capital = countryData.capital;
+    COUNTRY.subregion = countryData.capital;
+    COUNTRY.region = countryData.region;
+    COUNTRY.population = countryData.population;
+    COUNTRY.flagSvg = countryData.flags.svg;
+    COUNTRY.flagAlt = countryData.flags.alt;
+    COUNTRY.commonName = countryData.name.common;
+    let nativeNameKey = Object.keys(countryData.name.nativeName)[0];
+    COUNTRY.nativeName = countryData.name.nativeName[nativeNameKey].official;
+    for (let key in countryData.currencies) {
+      COUNTRY.currencies.push(countryData.currencies[key].name);
+    }
+    COUNTRY.currencies = COUNTRY.currencies.join(", ");
+    COUNTRY.languages = Object.values(countryData.languages).join(", ");
+    COUNTRY.tld = countryData.tld.join(", ");
+    COUNTRY.countriesSymbols = countryData.borders;
   }
-
-  console.log(countryData);
-
-  // info derived from countryData
-  const { capital, subregion, continents: region, population } = countryData;
-  const flagSvg = countryData.flags.svg;
-  const flagAlt = countryData.flags.alt;
-  const commonName = countryData.name.common;
-  // native name
-  const nativeNameKey = Object.keys(countryData.name.nativeName)[0];
-  const nativeName = countryData.name.nativeName[nativeNameKey].official;
-  // currencies
-  let currencies = [];
-  for (let key in countryData.currencies) {
-    currencies.push(countryData.currencies[key].name);
-  }
-  currencies = currencies.join(", ");
-  //languages
-  const languages = Object.values(countryData.languages).join(", ");
-  // top level domain
-  const tld = countryData.tld.join(", ");
-  // border countries
-  let countriesSymbols = countryData.borders;
 
   return (
     <>
-      <main className="lg:px-20 px-7 py-12 md:px-16">
+      <main className="px-7 py-12 md:px-16 lg:px-20">
         <Link to="/">
           <button className="flex items-center gap-4 rounded-lg px-10 py-3 text-2xl shadow-2xl dark:bg-slate-800 dark:text-white">
             <MoveLeft />
             <span>Back</span>
           </button>
         </Link>
-        <div id="country-card" className="lg:grid-cols-2 grid gap-20 pt-24">
-          <div id="country-flag" className="mx-auto max-w-[600px]">
-            <img src={flagSvg} alt={flagAlt} />
+        <div id="country-card" className="grid gap-20 pt-24 lg:grid-cols-2">
+          <div
+            id="country-flag"
+            className="mx-auto h-fit max-w-[600px] shadow-2xl"
+          >
+            <img src={COUNTRY.flagSvg} alt={COUNTRY.flagAlt} className="" />
           </div>
           <div
             id="country-info"
-            className="lg:grid-cols-2 lg:text-base lg:gap-10 grid gap-16 text-lg"
+            className="grid gap-16 text-lg lg:grid-cols-2 lg:gap-10 lg:text-base"
           >
-            <h1 className="lg:col-span-2 text-4xl font-bold">{commonName}</h1>
+            <h1 className="text-4xl font-bold lg:col-span-2">
+              {COUNTRY.commonName}
+            </h1>
             <div id="country-info--main" className="">
               <ul className="grid gap-3">
                 <li>
                   <span className="font-semibold">Native Name: </span>
-                  {nativeName}
+                  {COUNTRY.nativeName}
                 </li>
                 <li>
                   <span className="font-semibold"> Population: </span>
-                  {population}
+                  {COUNTRY.population}
                 </li>
                 <li>
                   <span className="font-semibold"> Region: </span>
-                  {region}
+                  {COUNTRY.region}
                 </li>
                 <li>
                   <span className="font-semibold"> Sub Region: </span>
-                  {subregion}
+                  {COUNTRY.subregion}
                 </li>
                 <li>
                   <span className="font-semibold"> Capital: </span>
-                  {capital}
+                  {COUNTRY.capital}
                 </li>
               </ul>
             </div>
@@ -85,25 +99,25 @@ export default function CountryPage() {
               <ul className="grid gap-3">
                 <li>
                   <span className="font-semibold"> Top Level Domain: </span>
-                  {tld}
+                  {COUNTRY.tld}
                 </li>
                 <li>
                   <span className="font-semibold"> Currencies: </span>
-                  {currencies}
+                  {COUNTRY.currencies}
                 </li>
                 <li>
                   <span className="font-semibold"> Languages: </span>
-                  {languages}
+                  {COUNTRY.languages}
                 </li>
               </ul>
             </div>
             <div
               id="country-info--borders"
-              className="lg:col-span-2 lg:flex lg:items-center gap-6"
+              className="gap-6 lg:col-span-2 lg:flex lg:items-center"
             >
-              <h2 className="lg:pb-0 pb-8 font-semibold">Border Countries:</h2>
-              <ul className="grid-cols-auto-fill-150 lg:grid-cols-auto-fill-100 lg:flex-1 grid justify-between gap-4">
-                {countriesSymbols.map((symbol) => {
+              <h2 className="pb-8 font-semibold lg:pb-0">Border Countries:</h2>
+              <ul className="grid auto-rows-fr grid-cols-auto-fill-150 justify-between gap-4 lg:flex-1 lg:grid-cols-auto-fill-100">
+                {COUNTRY.countriesSymbols.map((symbol) => {
                   let borderCountry = countries.data.find(
                     (_country) => _country.cca3 === symbol,
                   );

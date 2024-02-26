@@ -3,7 +3,7 @@ import { createContext, useState, useEffect } from "react";
 export const CountriesContext = createContext(null);
 
 const fields =
-  "name,flags,capital,continents,population,nativeName,subregion,topLevelDomain,tld,currencies,languages,borders,alpha3Code,cca3";
+  "name,flags,capital,region,population,nativeName,subregion,topLevelDomain,tld,currencies,languages,borders,alpha3Code,cca3";
 const url = `https://restcountries.com/v3.1/all?fields=${fields}`;
 
 // data fetching function
