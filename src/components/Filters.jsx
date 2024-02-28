@@ -22,7 +22,7 @@ export default function Filters({ handleInputChange, handleFilterChange }) {
       <Input
         type="text"
         placeholder="Search for a country..."
-        className="h-[58px] max-w-[480px] border-none text-white/90 shadow-lg dark:bg-slate-800 dark:placeholder:text-white/90 "
+        className="h-[58px] max-w-[480px] border-none bg-primary shadow-lg"
         onChange={handleInputChange}
         value={url.get("search") || ""}
       />
@@ -31,10 +31,10 @@ export default function Filters({ handleInputChange, handleFilterChange }) {
         onValueChange={handleFilterChange}
         value={url.get("filter") || ""}
       >
-        <SelectTrigger className="h-auto w-[200px] border-none shadow-lg dark:bg-slate-800 dark:text-white/90">
+        <SelectTrigger className="h-auto w-[200px] border-none bg-primary shadow-lg">
           <SelectValue placeholder="Filter by Region" />
         </SelectTrigger>
-        <SelectContent className="dark:bg-slate-800 dark:text-white">
+        <SelectContent className="bg-primary">
           <SelectGroup>
             <SelectLabel>Regions</SelectLabel>
             <SelectItem value="africa">Africa</SelectItem>

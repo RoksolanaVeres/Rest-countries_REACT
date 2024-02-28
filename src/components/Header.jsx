@@ -12,12 +12,12 @@ export default function Header() {
   return (
     <div
       id="header"
-      className="flex items-center justify-between px-7 py-10 shadow-lg dark:bg-slate-800 dark:text-white md:px-20 md:py-4"
+      className="flex items-center justify-between bg-primary px-7 py-10 shadow-lg md:px-20 md:py-4"
     >
       <div className="text-lg font-bold md:text-2xl">Where in the world?</div>
       <button
         onClick={toggleTheme}
-        className="flex items-center justify-center gap-1 rounded-lg p-2 text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-700 md:gap-3 md:p-4 md:text-base"
+        className="flex items-center justify-center gap-1 rounded-lg p-2 text-sm font-semibold md:gap-3 md:p-4 md:text-base"
       >
         {theme === "dark" ? (
           <>

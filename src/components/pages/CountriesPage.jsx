@@ -46,24 +46,24 @@ export default function CountriesPage() {
         handleInputChange={handleInputChange}
         handleFilterChange={handleFilterChange}
       />
-      <div className="grid grid-cols-auto-fill-265 justify-between gap-x-10 gap-y-20 dark:text-white">
+      <div className="grid grid-cols-auto-fill-265 justify-between gap-x-10 gap-y-20">
         {countries.data &&
           displayedCountries.map((country) => {
             return (
               <div
                 key={country.name.common}
-                className="rounded-lg bg-white shadow-lg dark:bg-slate-800"
+                className="rounded-lg bg-primary shadow-lg"
               >
                 <div className="h-[160px]">
                   <Link to={`/${country.name.common}`}>
                     <img
                       src={country.flags.svg}
                       alt={country.flags.alt}
-                      className="h-full w-full rounded-lg object-cover shadow-2xl transition-transform duration-300 ease-in-out hover:object-contain"
+                      className="h-full w-full rounded-lg object-cover"
                     />
                   </Link>
                 </div>
-                <div className="grid gap-2 px-7 pb-10 pt-7 text-sm font-semibold text-black dark:text-white">
+                <div className="grid gap-2 px-7 pb-10 pt-7 text-sm font-semibold ">
                   <Link to={`/${country.name.common}`}>
                     <h2 className="pb-1 text-lg font-bold">
                       {country.name.common}
