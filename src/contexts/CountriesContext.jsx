@@ -23,9 +23,7 @@ export function CountriesContextProvider({
     data: localStorage.getItem(storageKey)
       ? JSON.parse(localStorage.getItem(storageKey))
       : null,
-    isLoading: false,
-    isError: false,
-    isSuccess: false,
+    isLoading: localStorage.getItem(storageKey) ? false : true,
   });
 
   useEffect(() => {

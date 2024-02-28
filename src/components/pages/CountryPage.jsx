@@ -2,51 +2,49 @@ import { Link, useParams } from "react-router-dom";
 import { CountriesContext } from "@/contexts/CountriesContext";
 import { useContext } from "react";
 import { MoveLeft } from "lucide-react";
+import { Skeleton } from "../ui/skeleton";
 
 export default function CountryPage() {
   const { countries } = useContext(CountriesContext);
   const params = useParams();
   const chosenCountry = params.country;
 
-  const COUNTRY = {
-    capital: undefined,
-    region: undefined,
-    subregion: undefined,
-    population: undefined,
-    flagSvg: undefined,
-    flagAlt: undefined,
-    commonName: undefined,
-    nativeName: undefined,
-    tld: undefined,
-    languages: undefined,
-    currencies: [],
-    countriesSymbols: [],
-  };
+  console.log("isLoading: ", countries.isLoading);
 
-  console.log("COUNTRY", COUNTRY);
-  console.log("countries.data", countries.data);
-
-  if (countries.data) {
-    const countryData = countries.data.find(
-      (_country) => _country.name.common === chosenCountry,
-    );
-    COUNTRY.capital = countryData.capital;
-    COUNTRY.subregion = countryData.capital;
-    COUNTRY.region = countryData.region;
-    COUNTRY.population = countryData.population;
-    COUNTRY.flagSvg = countryData.flags.svg;
-    COUNTRY.flagAlt = countryData.flags.alt;
-    COUNTRY.commonName = countryData.name.common;
-    let nativeNameKey = Object.keys(countryData.name.nativeName)[0];
-    COUNTRY.nativeName = countryData.name.nativeName[nativeNameKey].official;
-    for (let key in countryData.currencies) {
-      COUNTRY.currencies.push(countryData.currencies[key].name);
-    }
-    COUNTRY.currencies = COUNTRY.currencies.join(", ");
-    COUNTRY.languages = Object.values(countryData.languages).join(", ");
-    COUNTRY.tld = countryData.tld.join(", ");
-    COUNTRY.countriesSymbols = countryData.borders;
+  if (countries.isLoading) {
+    return <p>Is Loading ...</p>;
   }
+
+  if (countries.isError) {
+    return <p>Failed to load the data</p>;
+  }
+
+  const countryData = countries.data.find(
+    (_country) => _country.name.common === chosenCountry,
+  );
+
+  const capital = countryData.capital;
+  const subregion = countryData.capital;
+  const region = countryData.region;
+  const population = countryData.population;
+  const flagSvg = countryData.flags.svg;
+  const flagAlt = countryData.flags.alt;
+  const commonName = countryData.name.common;
+
+  const nativeNameKey = Object.keys(countryData.name.nativeName)[0];
+  const nativeName = countryData.name.nativeName[nativeNameKey].official;
+
+  let currencies = [];
+  for (let key in countryData.currencies) {
+    currencies.push(countryData.currencies[key].name);
+  }
+  currencies = currencies.join(", ");
+
+  const languages = Object.values(countryData.languages).join(", ");
+  const tld = countryData.tld.join(", ");
+  const countriesSymbols = countryData.borders;
+
+  console.log("isLoading: ", countries.isLoading);
 
   return (
     <>
@@ -62,36 +60,34 @@ export default function CountryPage() {
             id="country-flag"
             className="mx-auto h-fit max-w-[600px] shadow-2xl"
           >
-            <img src={COUNTRY.flagSvg} alt={COUNTRY.flagAlt} className="" />
+            <img src={flagSvg} alt={flagAlt} className="" />
           </div>
           <div
             id="country-info"
             className="grid gap-16 text-lg lg:grid-cols-2 lg:gap-10 lg:text-base"
           >
-            <h1 className="text-4xl font-bold lg:col-span-2">
-              {COUNTRY.commonName}
-            </h1>
+            <h1 className="text-4xl font-bold lg:col-span-2">{commonName}</h1>
             <div id="country-info--main" className="">
               <ul className="grid gap-3">
                 <li>
                   <span className="font-semibold">Native Name: </span>
-                  {COUNTRY.nativeName}
+                  {nativeName}
                 </li>
                 <li>
                   <span className="font-semibold"> Population: </span>
-                  {COUNTRY.population}
+                  {population}
                 </li>
                 <li>
                   <span className="font-semibold"> Region: </span>
-                  {COUNTRY.region}
+                  {region}
                 </li>
                 <li>
                   <span className="font-semibold"> Sub Region: </span>
-                  {COUNTRY.subregion}
+                  {subregion}
                 </li>
                 <li>
                   <span className="font-semibold"> Capital: </span>
-                  {COUNTRY.capital}
+                  {capital}
                 </li>
               </ul>
             </div>
@@ -99,15 +95,15 @@ export default function CountryPage() {
               <ul className="grid gap-3">
                 <li>
                   <span className="font-semibold"> Top Level Domain: </span>
-                  {COUNTRY.tld}
+                  {tld}
                 </li>
                 <li>
                   <span className="font-semibold"> Currencies: </span>
-                  {COUNTRY.currencies}
+                  {currencies}
                 </li>
                 <li>
                   <span className="font-semibold"> Languages: </span>
-                  {COUNTRY.languages}
+                  {languages}
                 </li>
               </ul>
             </div>
@@ -117,7 +113,7 @@ export default function CountryPage() {
             >
               <h2 className="pb-8 font-semibold lg:pb-0">Border Countries:</h2>
               <ul className="grid auto-rows-fr grid-cols-auto-fill-150 justify-between gap-4 lg:flex-1 lg:grid-cols-auto-fill-100">
-                {COUNTRY.countriesSymbols.map((symbol) => {
+                {countriesSymbols.map((symbol) => {
                   let borderCountry = countries.data.find(
                     (_country) => _country.cca3 === symbol,
                   );

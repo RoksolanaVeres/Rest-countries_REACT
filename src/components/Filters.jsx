@@ -13,7 +13,7 @@ import { useSearchParams } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 
 export default function Filters({ handleInputChange, handleFilterChange }) {
-  const [url, setUrl] = useSearchParams();
+  const [url] = useSearchParams();
   return (
     <div
       id="filters-container"
