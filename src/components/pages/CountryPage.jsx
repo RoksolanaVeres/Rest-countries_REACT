@@ -49,12 +49,15 @@ export default function CountryPage() {
   return (
     <>
       <main className="px-7 py-12 md:px-16 lg:px-20">
-        <Link to="/">
-          <button className="flex items-center gap-4 rounded-lg px-10 py-3 text-2xl shadow-2xl dark:bg-slate-800 dark:text-white">
-            <MoveLeft />
-            <span>Back</span>
-          </button>
-        </Link>
+        <div id="back-button-container" className="w-[120px]">
+          <Link to="/">
+            <button className="flex w-[120px] items-center justify-center gap-2 rounded-lg bg-primary p-2 text-xl shadow-2xl">
+              <MoveLeft />
+              <span>Back</span>
+            </button>
+          </Link>
+        </div>
+
         <div id="country-card" className="grid gap-20 pt-24 lg:grid-cols-2">
           <div
             id="country-flag"
@@ -120,7 +123,7 @@ export default function CountryPage() {
                   return (
                     <li key={borderCountry.name.common}>
                       <Link to={`/${borderCountry.name.common}`}>
-                        <button className="h-full w-full rounded-lg p-2 shadow-2xl dark:bg-slate-800 dark:text-white">
+                        <button className="h-full w-full rounded-lg bg-primary p-2 shadow-2xl ">
                           {borderCountry.name.common}
                         </button>
                       </Link>
