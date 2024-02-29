@@ -37,11 +37,11 @@ export default function Filters({ handleInputChange, handleFilterChange }) {
         <SelectContent className="bg-primary">
           <SelectGroup>
             <SelectLabel>Regions</SelectLabel>
-            <SelectItem value="africa">Africa</SelectItem>
-            <SelectItem value="americas">America</SelectItem>
-            <SelectItem value="asia">Asia</SelectItem>
-            <SelectItem value="europe">Europe</SelectItem>
-            <SelectItem value="oceania">Oceania</SelectItem>
+            <SelectItem value="Africa">Africa</SelectItem>
+            <SelectItem value="Americas">America</SelectItem>
+            <SelectItem value="Asia">Asia</SelectItem>
+            <SelectItem value="Europe">Europe</SelectItem>
+            <SelectItem value="Oceania">Oceania</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>

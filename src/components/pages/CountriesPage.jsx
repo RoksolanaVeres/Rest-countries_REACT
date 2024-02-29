@@ -49,10 +49,10 @@ export default function CountriesPage() {
       );
     }
     if (filter) {
-      filtered = filtered.filter(
-        (country) => country.region.toLowerCase() === filter.toLowerCase(),
-      );
+      filtered = filtered.filter((country) => country.region === filter);
     }
+
+    console.log("filter", filter);
 
     displayedCountries = [...filtered];
   }
