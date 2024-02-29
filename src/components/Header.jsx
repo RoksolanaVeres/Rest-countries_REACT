@@ -12,7 +12,7 @@ export default function Header() {
   return (
     <div
       id="header"
-      className="flex items-center justify-between bg-primary px-7 py-10 shadow-lg md:px-20 md:py-4"
+      className="flex w-full max-w-[1500px] items-center justify-between px-7 py-10 md:px-20 md:py-4 "
     >
       <div className="text-lg font-bold md:text-2xl">Where in the world?</div>
       <button
