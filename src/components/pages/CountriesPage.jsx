@@ -1,13 +1,23 @@
 import Filters from "../Filters";
 import { CountriesContext } from "@/contexts/CountriesContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import CountryCard from "../CountryCard";
+import { useInView } from "react-intersection-observer";
+
+const PER_PAGE = 20;
 
 export default function CountriesPage() {
   const { countries } = useContext(CountriesContext);
   const [url, setUrl] = useSearchParams();
-  const PER_PAGE = 20;
+  const [page, setPage] = useState(1);
+  const { ref, inView } = useInView(false);
+
+  useEffect(() => {
+    if (inView) {
+      setPage((page) => page + 1);
+    }
+  }, [inView]);
 
   if (countries.isLoading)
     return (
@@ -52,9 +62,7 @@ export default function CountriesPage() {
       filtered = filtered.filter((country) => country.region === filter);
     }
 
-    console.log("filter", filter);
-
-    displayedCountries = [...filtered];
+    displayedCountries = filtered.slice(0, page * PER_PAGE);
   }
 
   return (
@@ -69,6 +77,7 @@ export default function CountriesPage() {
             return <CountryCard country={country} key={country.name.common} />;
           })}
       </div>
+      <div className="h-1 w-full" ref={ref}></div>
     </main>
   );
 }

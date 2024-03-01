@@ -22,7 +22,9 @@ export default function CountryCard({ country }) {
         </Link>
         <h3>
           Population:
-          <span className="font-normal"> {country.population}</span>
+          <span className="font-normal">
+            {Intl.NumberFormat().format(country.population)}
+          </span>
         </h3>
         <h3>
           Region:

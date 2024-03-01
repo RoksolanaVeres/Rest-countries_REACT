@@ -67,7 +67,7 @@ export default function CountryPage() {
                 </li>
                 <li>
                   <span className="font-semibold"> Population: </span>
-                  {countryData.population}
+                  {new Intl.NumberFormat().format(population)}
                 </li>
                 <li>
                   <span className="font-semibold"> Region: </span>
