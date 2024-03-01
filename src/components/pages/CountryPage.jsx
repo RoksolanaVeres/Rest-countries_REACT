@@ -36,6 +36,7 @@ export default function CountryPage() {
   currencies = currencies.join(", ");
   const languages = Object.values(countryData.languages).join(", ");
   const tld = countryData.tld.join(", ");
+  const countriesSymbols = countryData.borders;
 
   return (
     <>
@@ -67,7 +68,7 @@ export default function CountryPage() {
                 </li>
                 <li>
                   <span className="font-semibold"> Population: </span>
-                  {new Intl.NumberFormat().format(population)}
+                  {new Intl.NumberFormat().format(countryData.population)}
                 </li>
                 <li>
                   <span className="font-semibold"> Region: </span>
@@ -105,7 +106,7 @@ export default function CountryPage() {
             >
               <h2 className="pb-8 font-semibold lg:pb-0">Border Countries:</h2>
               <ul className="grid auto-rows-fr grid-cols-auto-fill-150 justify-between gap-4 lg:flex-1 lg:grid-cols-auto-fill-100">
-                {countryData.borders.map((symbol) => {
+                {countriesSymbols.map((symbol) => {
                   let borderCountry = countries.data.find(
                     (_country) => _country.cca3 === symbol,
                   );
