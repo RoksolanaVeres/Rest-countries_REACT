@@ -23,7 +23,10 @@ export default function CountryCard({ country }) {
         <h3>
           Population:
           <span className="font-normal">
-            {Intl.NumberFormat().format(country.population)}
+            {" "}
+            {country.population !== 0
+              ? Intl.NumberFormat().format(country.population)
+              : "N/A"}
           </span>
         </h3>
         <h3>
@@ -32,7 +35,10 @@ export default function CountryCard({ country }) {
         </h3>
         <h3>
           Capital:
-          <span className="font-normal"> {country.capital}</span>
+          <span className="font-normal">
+            {" "}
+            {country.capital.length > 0 ? country.capital.join(", ") : "N/A"}
+          </span>
         </h3>
       </div>
     </div>

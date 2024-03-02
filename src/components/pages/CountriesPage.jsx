@@ -106,6 +106,10 @@ function ScrollToTopButton() {
   useEffect(() => {
     buttonRef.current.classList.add("hidden");
     window.addEventListener("scroll", scrollHandler);
+
+    return () => {
+      window.removeEventListener("scroll", scrollHandler);
+    };
   }, []);
 
   return (

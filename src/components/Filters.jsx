@@ -31,7 +31,7 @@ export default function Filters({ handleInputChange, handleFilterChange }) {
         onValueChange={handleFilterChange}
         value={url.get("filter") || ""}
       >
-        <SelectTrigger className="h-auto w-[200px] border-none bg-primary shadow-lg">
+        <SelectTrigger className="h-[58px] w-[200px] border-none bg-primary shadow-lg">
           <SelectValue placeholder="Filter by Region" />
         </SelectTrigger>
         <SelectContent className="bg-primary">

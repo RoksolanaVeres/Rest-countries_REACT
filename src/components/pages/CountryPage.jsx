@@ -26,15 +26,25 @@ export default function CountryPage() {
     (_country) => _country.name.common === chosenCountry,
   );
 
+  console.log(countryData);
+
   // info derived from countryData
+  let nativeName = null;
   const nativeNameKey = Object.keys(countryData.name.nativeName)[0];
-  const nativeName = countryData.name.nativeName[nativeNameKey].official;
+  if (nativeNameKey) {
+    nativeName = countryData.name.nativeName[nativeNameKey].official;
+  }
+
   let currencies = [];
   for (let key in countryData.currencies) {
     currencies.push(countryData.currencies[key].name);
   }
   currencies = currencies.join(", ");
-  const languages = Object.values(countryData.languages).join(", ");
+
+  const languages =
+    Object.values(countryData.languages).length > 0
+      ? Object.values(countryData.languages).join(", ")
+      : "N/A";
   const tld = countryData.tld.join(", ");
   const countriesSymbols = countryData.borders;
 
@@ -45,7 +55,7 @@ export default function CountryPage() {
         <div id="country-card" className="grid gap-20 pt-24 lg:grid-cols-2">
           <div
             id="country-flag"
-            className="mx-auto h-fit max-w-[600px] shadow-2xl"
+            className="mx-auto h-fit max-w-[600px] shadow-lg"
           >
             <img
               src={countryData.flags.svg}
@@ -64,11 +74,13 @@ export default function CountryPage() {
               <ul className="grid gap-3">
                 <li>
                   <span className="font-semibold">Native Name: </span>
-                  {nativeName}
+                  {nativeName ? nativeName : "N/A"}
                 </li>
                 <li>
-                  <span className="font-semibold"> Population: </span>
-                  {new Intl.NumberFormat().format(countryData.population)}
+                  <span className="font-semibold"> Population: </span>{" "}
+                  {countryData.population !== 0
+                    ? new Intl.NumberFormat().format(countryData.population)
+                    : "N/A"}
                 </li>
                 <li>
                   <span className="font-semibold"> Region: </span>
@@ -76,11 +88,15 @@ export default function CountryPage() {
                 </li>
                 <li>
                   <span className="font-semibold"> Sub Region: </span>
-                  {countryData.subregion}
+                  {countryData.subregion.length > 0
+                    ? countryData.subregion
+                    : "N/A"}
                 </li>
                 <li>
                   <span className="font-semibold"> Capital: </span>
-                  {countryData.capital}
+                  {countryData.capital.length > 0
+                    ? countryData.capital.join(", ")
+                    : "N/A"}
                 </li>
               </ul>
             </div>
@@ -92,7 +108,7 @@ export default function CountryPage() {
                 </li>
                 <li>
                   <span className="font-semibold"> Currencies: </span>
-                  {currencies}
+                  {currencies.length > 0 ? currencies : "N/A"}
                 </li>
                 <li>
                   <span className="font-semibold"> Languages: </span>
@@ -105,22 +121,26 @@ export default function CountryPage() {
               className="gap-6 lg:col-span-2 lg:flex lg:items-center"
             >
               <h2 className="pb-8 font-semibold lg:pb-0">Border Countries:</h2>
-              <ul className="grid auto-rows-fr grid-cols-auto-fill-150 justify-between gap-4 lg:flex-1 lg:grid-cols-auto-fill-100">
-                {countriesSymbols.map((symbol) => {
-                  let borderCountry = countries.data.find(
-                    (_country) => _country.cca3 === symbol,
-                  );
-                  return (
-                    <li key={borderCountry.name.common}>
-                      <Link to={`/${borderCountry.name.common}`}>
-                        <button className="h-full w-full rounded-lg bg-primary p-2 shadow-2xl ">
-                          {borderCountry.name.common}
-                        </button>
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
+              {countriesSymbols.length > 0 ? (
+                <ul className="grid auto-rows-fr grid-cols-auto-fill-150 justify-between gap-4 lg:flex-1 lg:grid-cols-auto-fill-100">
+                  {countriesSymbols.map((symbol) => {
+                    let borderCountry = countries.data.find(
+                      (_country) => _country.cca3 === symbol,
+                    );
+                    return (
+                      <li key={borderCountry.name.common}>
+                        <Link to={`/${borderCountry.name.common}`}>
+                          <button className="h-full w-full rounded-lg bg-primary p-2 shadow-lg ">
+                            {borderCountry.name.common}
+                          </button>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : (
+                "N/A"
+              )}
             </div>
           </div>
         </div>
@@ -137,7 +157,7 @@ function BackButton() {
   return (
     <div id="button-container" className="w-[120px]">
       <Link to="/">
-        <button className="flex w-[120px] flex-auto items-center justify-center gap-2 rounded-lg bg-primary p-2 text-xl shadow-2xl">
+        <button className="flex w-[120px] flex-auto items-center justify-center gap-2 rounded-lg bg-primary p-2 text-xl shadow-lg">
           <MoveLeft />
           <span>Back</span>
         </button>

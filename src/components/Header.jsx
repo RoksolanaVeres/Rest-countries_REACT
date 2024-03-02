@@ -26,12 +26,12 @@ export default function Header() {
         {theme === "dark" ? (
           <>
             <Sun />
-            Light Mode
+            <span className="hidden md:inline">Light Mode</span>
           </>
         ) : (
           <>
             <Moon />
-            Dark Mode
+            <span className="hidden md:inline">Dark Mode</span>
           </>
         )}
       </button>
