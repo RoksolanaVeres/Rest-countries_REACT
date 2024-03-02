@@ -1,9 +1,11 @@
 import Filters from "../Filters";
 import { CountriesContext } from "@/contexts/CountriesContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import CountryCard from "../CountryCard";
 import { useInView } from "react-intersection-observer";
+import { ArrowBigUp } from "lucide-react";
+import { Button } from "../ui/button";
 
 const PER_PAGE = 20;
 
@@ -77,7 +79,43 @@ export default function CountriesPage() {
             return <CountryCard country={country} key={country.name.common} />;
           })}
       </div>
-      <div className="h-1 w-full" ref={ref}></div>
+      <div className="h-1 w-full" ref={ref}>
+        <ScrollToTopButton />
+      </div>
     </main>
+  );
+}
+
+function ScrollToTopButton() {
+  const buttonRef = useRef(null);
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  const scrollHandler = () => {
+    const threshold = 350;
+    const button = buttonRef.current;
+    if (window.scrollY > threshold) {
+      button.classList.remove("hidden");
+    } else {
+      button.classList.add("hidden");
+    }
+  };
+
+  useEffect(() => {
+    buttonRef.current.classList.add("hidden");
+    window.addEventListener("scroll", scrollHandler);
+  }, []);
+
+  return (
+    <Button
+      ref={buttonRef}
+      variant="outline"
+      className="fixed bottom-3 right-3 shadow-lg"
+      onClick={scrollToTop}
+    >
+      <ArrowBigUp />
+    </Button>
   );
 }
