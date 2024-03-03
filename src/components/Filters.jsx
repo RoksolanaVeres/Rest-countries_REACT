@@ -34,7 +34,15 @@ export default function Filters({ handleInputChange, handleFilterChange }) {
         <SelectTrigger className="h-[58px] w-[200px] border-none bg-primary shadow-lg">
           <SelectValue placeholder="Filter by Region" />
         </SelectTrigger>
-        <SelectContent className="bg-primary">
+        <SelectContent
+          className="bg-primary"
+          ref={(ref) => {
+            if (!ref) return;
+            ref.ontouchstart = (e) => {
+              e.preventDafault();
+            };
+          }}
+        >
           <SelectGroup>
             <SelectLabel>Regions</SelectLabel>
             <SelectItem value="Africa">Africa</SelectItem>
