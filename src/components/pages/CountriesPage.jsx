@@ -108,6 +108,7 @@ function ScrollToTopButton() {
     window.addEventListener("scroll", scrollHandler);
 
     return () => {
+      window.scroll(0, 0);
       window.removeEventListener("scroll", scrollHandler);
     };
   }, []);
