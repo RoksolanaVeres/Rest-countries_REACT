@@ -6,6 +6,7 @@ import CountryCard from "../CountryCard";
 import { useInView } from "react-intersection-observer";
 import { ArrowBigUp } from "lucide-react";
 import { Button } from "../ui/button";
+import { motion } from "framer-motion";
 
 const PER_PAGE = 20;
 
@@ -21,6 +22,17 @@ export default function CountriesPage() {
     }
   }, [inView]);
 
+  function handleInputChange(event) {
+    setUrl((prev) => ({
+      filter: prev.get("filter") || "",
+      search: event.target.value,
+    }));
+  }
+
+  function handleFilterChange(val) {
+    setUrl((prev) => ({ search: prev.get("search") || "", filter: val }));
+  }
+
   if (countries.isLoading)
     return (
       <main className="px-7 py-12 md:px-20">
@@ -35,17 +47,6 @@ export default function CountriesPage() {
         </div>
       </main>
     );
-
-  function handleInputChange(event) {
-    setUrl((prev) => ({
-      filter: prev.get("filter") || "",
-      search: event.target.value,
-    }));
-  }
-
-  function handleFilterChange(val) {
-    setUrl((prev) => ({ search: prev.get("search") || "", filter: val }));
-  }
 
   let displayedCountries = [];
 

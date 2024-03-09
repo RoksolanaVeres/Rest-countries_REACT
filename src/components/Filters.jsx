@@ -8,11 +8,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { useRef } from "react";
+
 import { useSearchParams } from "react-router-dom";
 
 import { Input } from "@/components/ui/input";
 
 export default function Filters({ handleInputChange, handleFilterChange }) {
+  // const ref = useRef(null);
   const [url] = useSearchParams();
   return (
     <div
@@ -35,12 +38,12 @@ export default function Filters({ handleInputChange, handleFilterChange }) {
           <SelectValue placeholder="Filter by Region" />
         </SelectTrigger>
         <SelectContent
-          className="bg-primary"
+          className="select-none bg-primary"
           ref={(ref) => {
             if (!ref) return;
-            return (ref.ontouchstart = (e) => {
-              e.preventDafault();
-            });
+            ref.ontouchstart = (e) => {
+              e.preventDefault();
+            };
           }}
         >
           <SelectGroup>

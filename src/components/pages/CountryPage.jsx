@@ -3,6 +3,7 @@ import { CountriesContext } from "@/contexts/CountriesContext";
 import { useContext } from "react";
 import { MoveLeft } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
+import { motion } from "framer-motion";
 
 export default function CountryPage() {
   const { countries } = useContext(CountriesContext);
@@ -25,8 +26,6 @@ export default function CountryPage() {
   const countryData = countries.data.find(
     (_country) => _country.name.common === chosenCountry,
   );
-
-  console.log(countryData);
 
   // info derived from countryData
   let nativeName = null;
@@ -130,9 +129,15 @@ export default function CountryPage() {
                     return (
                       <li key={borderCountry.name.common}>
                         <Link to={`/${borderCountry.name.common}`}>
-                          <button className="h-full w-full rounded-lg bg-primary p-2 shadow-lg ">
+                          <motion.button
+                            whileHover={{
+                              scale: 1.1,
+                              transition: { duration: 0.4 },
+                            }}
+                            className="h-full w-full rounded-lg bg-primary p-2 shadow-lg "
+                          >
                             {borderCountry.name.common}
-                          </button>
+                          </motion.button>
                         </Link>
                       </li>
                     );
@@ -157,10 +162,16 @@ function BackButton() {
   return (
     <div id="button-container" className="w-[120px]">
       <Link to="/">
-        <button className="flex w-[120px] flex-auto items-center justify-center gap-2 rounded-lg bg-primary p-2 text-xl shadow-lg">
+        <motion.button
+          whileHover={{
+            scale: 1.1,
+            transition: { duration: 0.4 },
+          }}
+          className="flex w-[120px] flex-auto items-center justify-center gap-2 rounded-lg bg-primary p-2 text-xl shadow-lg"
+        >
           <MoveLeft />
           <span>Back</span>
-        </button>
+        </motion.button>
       </Link>
     </div>
   );
