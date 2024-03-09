@@ -52,16 +52,26 @@ export default function CountryPage() {
       <CountryPageWrapper>
         <BackButton />
         <div id="country-card" className="grid gap-20 pt-24 lg:grid-cols-2">
-          <div
+          <motion.div
+            whileHover={{
+              scale: 1.05,
+              transition: { duration: 0.4 },
+              type: "spring",
+            }}
             id="country-flag"
             className="mx-auto h-fit max-w-[600px] shadow-lg"
           >
-            <img
-              src={countryData.flags.svg}
-              alt={countryData.flags.alt}
-              className=""
-            />
-          </div>
+            <a
+              href={`https://en.wikipedia.org/wiki/${countryData.name.common}`}
+              target="blank"
+            >
+              <img
+                src={countryData.flags.svg}
+                alt={countryData.flags.alt}
+                className=""
+              />
+            </a>
+          </motion.div>
           <div
             id="country-info"
             className="grid gap-16 text-lg lg:grid-cols-2 lg:gap-10 lg:text-base"
