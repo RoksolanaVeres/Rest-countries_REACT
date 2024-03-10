@@ -59,10 +59,19 @@ export default function CountryPage() {
               type: "spring",
             }}
             id="country-flag"
-            className="mx-auto h-fit max-w-[600px] shadow-lg"
+            className=" relative mx-auto h-fit max-w-[600px] shadow-lg"
           >
+            {countryData.name.common === "Russia" && (
+              <p className="absolute w-full bg-black p-2 text-xl text-white">
+                #russiaIsATerroristState
+              </p>
+            )}
             <a
-              href={`https://en.wikipedia.org/wiki/${countryData.name.common}`}
+              href={
+                countryData.name.common === "Russia"
+                  ? "https://en.wikipedia.org/wiki/War_crimes_in_the_Russian_invasion_of_Ukraine"
+                  : `https://en.wikipedia.org/wiki/${countryData.name.common}`
+              }
               target="blank"
             >
               <img

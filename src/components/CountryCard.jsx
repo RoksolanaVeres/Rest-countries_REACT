@@ -14,7 +14,7 @@ export default function CountryCard({ country }) {
         id="country-card"
         className="cursor-pointer rounded-lg bg-primary shadow-lg"
       >
-        <div className="h-[160px]">
+        <div className="relative h-[160px]">
           <img
             src={country.flags.svg}
             alt={country.flags.alt}
