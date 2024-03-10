@@ -68,7 +68,7 @@ export default function CountryPage() {
               <img
                 src={countryData.flags.svg}
                 alt={countryData.flags.alt}
-                className=""
+                className="w-full md:w-[600px]"
               />
             </a>
           </motion.div>
